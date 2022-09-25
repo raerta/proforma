@@ -2,31 +2,31 @@
     {
         "urunAdi": "1. Ürün",
         "urunFiyat": 100,
-        "urunKodu": "123456"
+        "urunKodu": "sgw-1"
     },
     {
-        "urunAdi": "2. Ürün kod",
+        "urunAdi": "2. Ürün kod sgw",
         "urunFiyat": 100,
-        "urunKodu": "kodu"
+        "urunKodu": "sgw-2"
     },
     {
         "urunAdi": "3. Ürün",
         "urunFiyat": 100,
-        "urunKodu": "1234568"
+        "urunKodu": "sgw-3"
     },
     {
         "urunAdi": "4. Ürün",
         "urunFiyat": 100,
-        "urunKodu": "1234569"
+        "urunKodu": "sgw-4"
     },
     {
         "urunAdi": "5. Ürün",
         "urunFiyat": 100,
-        "urunKodu": "1234510"
+        "urunKodu": "sgw-5"
     },
     {
         "urunAdi": "6. Ürün",
         "urunFiyat": 100,
-        "urunKodu": "1234511"
+        "urunKodu": "sgw-6"
     }
 ]

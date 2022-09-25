@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import UrunData from "../../public/urunler.json";
+import UrunData from "../public/urunler.json";
+import ProformaCreate from "./ProformaCreate";
 
 const Home = () => {
   const today = new Date();
@@ -11,20 +12,20 @@ const Home = () => {
       ? `0${today.getUTCMonth() + 1}`
       : today.getUTCMonth() + 1;
   const year = today.getUTCFullYear();
+
+  const [proformIsVisible, setProformIsVisible] = useState(false);
   const [date, setDate] = useState(`${day}/${month}/${year}`);
   const [urunler, setUrunler] = useState("");
   const [qty, setQty] = useState(1);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [inputText, setInputText] = useState("");
-
-  //   const search = (e) => {
-  //     e.preventDefault();
-  //     setInputText(e.target.value);
-  //     const filteredProduct = UrunData.filter((text) =>
-  //       text.urunAdi.toLocaleLowerCase().includes(inputText.toLocaleLowerCase())
-  //     );
-  //     setUrunler(filteredProduct);
-  //   };
+  const [teslimDate, setTeslimDate] = useState("20-25 Gün");
+  const [alici, setAlici] = useState({
+    aliciAdi: "",
+    aliciAdres: "",
+    aliciBin: "",
+    aliciPhone: "",
+  });
 
   useEffect(() => {
     const filteredProductWithName = UrunData.filter((prod) =>
@@ -71,6 +72,17 @@ const Home = () => {
     setSelectedProducts(filteredProducts);
   };
 
+  const handleFirmChange = (e) => {
+    setAlici((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const data = {
+    products: selectedProducts,
+    firm: alici,
+    created: date,
+    teslimDate: teslimDate,
+  };
+
   return (
     <div className="container m-auto pb-96">
       <div className="Header flex justify-end">
@@ -95,19 +107,39 @@ const Home = () => {
         <div className="w-1/2 bg-[#d9d9d9] border border-black p-8">
           <div className="flex gap-3 mt-4">
             <p className="w-20">Firma Adı:</p>
-            <textarea className="p-2" placeholder="Firma adını giriniz." />
+            <textarea
+              className="p-2"
+              placeholder="Firma adını giriniz."
+              name="aliciAdi"
+              onChange={handleFirmChange}
+            />
           </div>
           <div className="flex items-center gap-3 mt-4">
             <p className="w-20">BIN:</p>
-            <input className="px-3 py-1" placeholder="BIN Kodu giriniz." />
+            <input
+              className="px-3 py-1"
+              placeholder="BIN Kodu giriniz."
+              name="aliciBin"
+              onChange={handleFirmChange}
+            />
           </div>
           <div className="flex gap-3 mt-4">
             <p className="w-20">Address:</p>
-            <textarea className="p-2" placeholder="Adres giriniz." />
+            <textarea
+              className="p-2"
+              placeholder="Adres giriniz."
+              name="aliciAdres"
+              onChange={handleFirmChange}
+            />
           </div>
           <div className="flex gap-3 mt-4">
             <p className="w-20">Phone:</p>
-            <textarea className="p-2" placeholder="Telefon Numarası giriniz." />
+            <textarea
+              className="p-2"
+              placeholder="Telefon Numarası giriniz."
+              name="aliciPhone"
+              onChange={handleFirmChange}
+            />
           </div>
         </div>
       </div>
@@ -123,7 +155,7 @@ const Home = () => {
           />
         </div>
         {urunler.length > 0 && (
-          <div className="relative bg-black/40 w-full h-screen">
+          <div className="relative bg-black/40 w-full min-h-screen">
             <div className="absolute top-0 w-full">
               {urunler.map((urun) => (
                 <div className="flex" key={urun.urunKodu}>
@@ -181,7 +213,7 @@ const Home = () => {
         </div>
       </div>
       <div className="flex">
-        <div className="border border-black w-[45%] bg-[#d9d9d9] p-2 text-center">
+        <div className="border border-black w-[40%] bg-[#d9d9d9] p-2 text-center">
           ÜRÜN CİNSİ
         </div>
         <div className="border border-black w-[15%] bg-[#d9d9d9] p-2 text-center">
@@ -190,11 +222,11 @@ const Home = () => {
         <div className="border border-black w-[18%] bg-[#d9d9d9] p-2 text-center">
           BİRİM(USD)
         </div>
-        <div className="border border-black w-[22%] bg-[#d9d9d9] p-2 text-center">
+        <div className="border border-black w-[27%] bg-[#d9d9d9] p-2 text-center">
           TOPLAM(USD)
         </div>
       </div>
-      <div className="">
+      <div className="addedProducts">
         {selectedProducts.length > 0 &&
           selectedProducts.map((urun) => (
             <div className="flex" key={urun.urunKodu}>
@@ -208,7 +240,7 @@ const Home = () => {
                 <p className="mr-2">{urun.urunFiyat}</p> USD
               </div>
               <div className="border border-black w-[22%] bg-[#d9d9d9] p-2 text-center flex justify-center items-center">
-                <p className="mr-2">{urun.urunFiyat * qty}</p>USD
+                <p className="mr-2">{urun.urunFiyat * urun.qty}</p>USD
               </div>
               <div className="border border-black w-[5%] bg-[#d9d9d9] p-2 text-center flex justify-center items-center">
                 <button
@@ -221,6 +253,29 @@ const Home = () => {
             </div>
           ))}
       </div>
+      <div className="mt-20 flex justify-end">
+        <div className="flex text-3xl font-bold">
+          <p className="mr-1">Toplam:</p>
+
+          {selectedProducts
+            .reduce((a, c) => a + c.urunFiyat * c.qty, 0)
+            .toFixed(2)}
+
+          <p className="ml-1">USD</p>
+        </div>
+      </div>
+      <div className="mt-10 flex justify-end items-center text-2xl ">
+        <h2 className="mr-2">TESLİM DETAY:</h2>
+        <input
+          className="px-2 py-1 ring ring-indigo-600 outline-none"
+          type="text"
+          placeholder="Ne kadar sürede teslim edilir."
+          onChange={(e) => setTeslimDate(e.target.value)}
+          value={teslimDate}
+        />
+      </div>
+
+      <ProformaCreate invoiceData={data} />
     </div>
   );
 };
