@@ -1,0 +1,32 @@
+[
+    {
+        "urunAdi": "1. Ürün",
+        "urunFiyat": 100,
+        "urunKodu": "123456"
+    },
+    {
+        "urunAdi": "2. Ürün kod",
+        "urunFiyat": 100,
+        "urunKodu": "kodu"
+    },
+    {
+        "urunAdi": "3. Ürün",
+        "urunFiyat": 100,
+        "urunKodu": "1234568"
+    },
+    {
+        "urunAdi": "4. Ürün",
+        "urunFiyat": 100,
+        "urunKodu": "1234569"
+    },
+    {
+        "urunAdi": "5. Ürün",
+        "urunFiyat": 100,
+        "urunKodu": "1234510"
+    },
+    {
+        "urunAdi": "6. Ürün",
+        "urunFiyat": 100,
+        "urunKodu": "1234511"
+    }
+]
