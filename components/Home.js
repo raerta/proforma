@@ -13,13 +13,13 @@ const Home = () => {
       : today.getUTCMonth() + 1;
   const year = today.getUTCFullYear();
 
-  const [proformIsVisible, setProformIsVisible] = useState(false);
   const [date, setDate] = useState(`${day}/${month}/${year}`);
   const [urunler, setUrunler] = useState("");
   const [qty, setQty] = useState(1);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [inputText, setInputText] = useState("");
   const [teslimDate, setTeslimDate] = useState("20-25 Gün");
+  const [invoice, setInvoice] = useState("");
   const [alici, setAlici] = useState({
     aliciAdi: "",
     aliciAdres: "",
@@ -47,6 +47,7 @@ const Home = () => {
       urunKodu: urun.urunKodu,
       urunFiyat: urun.urunFiyat,
       qty: qty,
+      urunTotal: urun.urunFiyat * qty,
     };
     const ifExist = selectedProducts.filter(
       (prod) => prod.urunAdi === newUrun.urunAdi
@@ -81,6 +82,7 @@ const Home = () => {
     firm: alici,
     created: date,
     teslimDate: teslimDate,
+    invoiceNo: invoice,
   };
 
   return (
@@ -198,6 +200,8 @@ const Home = () => {
             <input
               className="px-3 py-1 ring ring-black outline-none"
               placeholder="invoice numarası giriniz."
+              value={invoice}
+              onChange={(e) => setInvoice(e.target.value)}
             />
           </div>
         </div>

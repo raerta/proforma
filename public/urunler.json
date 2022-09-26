@@ -28,5 +28,20 @@
         "urunAdi": "6. Ürün",
         "urunFiyat": 100,
         "urunKodu": "sgw-6"
+    },
+    {
+        "urunAdi": "7. Ürün",
+        "urunFiyat": 150,
+        "urunKodu": "sgw-7"
+    },
+    {
+        "urunAdi": "8. Ürün",
+        "urunFiyat": 100,
+        "urunKodu": "sgw-8"
+    },
+    {
+        "urunAdi": "9. Ürün",
+        "urunFiyat": 100,
+        "urunKodu": "sgw-9"
     }
 ]
