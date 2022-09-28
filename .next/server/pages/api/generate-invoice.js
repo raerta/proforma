@@ -1,0 +1,66 @@
+"use strict";
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+(() => {
+var exports = {};
+exports.id = "pages/api/generate-invoice";
+exports.ids = ["pages/api/generate-invoice"];
+exports.modules = {
+
+/***/ "handlebars":
+/*!*****************************!*\
+  !*** external "handlebars" ***!
+  \*****************************/
+/***/ ((module) => {
+
+module.exports = require("handlebars");
+
+/***/ }),
+
+/***/ "puppeteer":
+/*!****************************!*\
+  !*** external "puppeteer" ***!
+  \****************************/
+/***/ ((module) => {
+
+module.exports = import("puppeteer");;
+
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/***/ ((module) => {
+
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ "(api)/./pages/api/generate-invoice.js":
+/*!***************************************!*\
+  !*** ./pages/api/generate-invoice.js ***!
+  \***************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {\n__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! fs */ \"fs\");\n/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var puppeteer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! puppeteer */ \"puppeteer\");\n/* harmony import */ var handlebars__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! handlebars */ \"handlebars\");\n/* harmony import */ var handlebars__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(handlebars__WEBPACK_IMPORTED_MODULE_2__);\nvar __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([puppeteer__WEBPACK_IMPORTED_MODULE_1__]);\npuppeteer__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];\n\n\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (async (req, res)=>{\n    // extract the customer name from the req.body object\n    // and also set a default name with the logical operator\n    console.log(req.body);\n    const { invoiceData  } = JSON.parse(req.body);\n    const { products , firm , created , teslimDate , invoiceNo , total  } = invoiceData;\n    console.log(\"firm\", firm);\n    const customerName = firm.aliciAdi || \" \";\n    const customerAdress = firm.aliciAdres || \" \";\n    const customerBin = firm.aliciBin || \" \";\n    const customerPhone = firm.aliciPhone || \" \";\n    const totalPrice = total.toFixed(2);\n    try {\n        // read our invoice-template.html file using node fs module\n        const file = fs__WEBPACK_IMPORTED_MODULE_0___default().readFileSync(\"./invoice-template.html\", \"utf8\");\n        // compile the file with handlebars and inject the customerName variable\n        const template = handlebars__WEBPACK_IMPORTED_MODULE_2___default().compile(`${file}`);\n        const html = template({\n            customerName,\n            customerAdress,\n            customerBin,\n            customerPhone,\n            products,\n            created,\n            teslimDate,\n            invoiceNo,\n            totalPrice\n        });\n        console.log(\"products\", products);\n        // simulate a chrome browser with puppeteer and navigate to a new page\n        const browser = await puppeteer__WEBPACK_IMPORTED_MODULE_1__[\"default\"].launch({\n            headless: true,\n            args: [\n                \"--no-sandbox\"\n            ]\n        });\n        const page = await browser.newPage();\n        // set our compiled html template as the pages content\n        // then waitUntil the network is idle to make sure the content has been loaded\n        await page.setContent(html, {\n            waitUntil: \"networkidle0\"\n        });\n        // convert the page to pdf with the .pdf() method\n        const pdf = await page.pdf({\n            format: \"A4\",\n            printBackground: true,\n            displayHeaderFooter: true,\n            footerTemplate: `\n    <div style=\"color: darkslategrey; border-top: solid lightgray 1px; font-size: 10px; padding-top: 5px; text-align: center; width: 100%;\">\n    <span class=\"pageNumber\"></span>\n    </div>\n  `,\n            headerTemplate: `<div></div>`,\n            margin: {\n                bottom: 70,\n                left: 25,\n                right: 35,\n                top: 31\n            }\n        });\n        await browser.close();\n        // send the result to the client\n        res.statusCode = 200;\n        res.send(pdf);\n    } catch (err) {\n        console.log(err);\n        res.status(500).json({\n            message: err.message\n        });\n    }\n});\n\n__webpack_async_result__();\n} catch(e) { __webpack_async_result__(e); } });//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKGFwaSkvLi9wYWdlcy9hcGkvZ2VuZXJhdGUtaW52b2ljZS5qcy5qcyIsIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7QUFBb0I7QUFDYztBQUNBO0FBRWxDLGlFQUFlLE9BQU9HLEdBQUcsRUFBRUMsR0FBRyxHQUFLO0lBQ2pDLHFEQUFxRDtJQUNyRCx3REFBd0Q7SUFDeERDLE9BQU8sQ0FBQ0MsR0FBRyxDQUFDSCxHQUFHLENBQUNJLElBQUksQ0FBQyxDQUFDO0lBQ3RCLE1BQU0sRUFBRUMsV0FBVyxHQUFFLEdBQUdDLElBQUksQ0FBQ0MsS0FBSyxDQUFDUCxHQUFHLENBQUNJLElBQUksQ0FBQztJQUU1QyxNQUFNLEVBQUVJLFFBQVEsR0FBRUMsSUFBSSxHQUFFQyxPQUFPLEdBQUVDLFVBQVUsR0FBRUMsU0FBUyxHQUFFQyxLQUFLLEdBQUUsR0FBR1IsV0FBVztJQUU3RUgsT0FBTyxDQUFDQyxHQUFHLENBQUMsTUFBTSxFQUFFTSxJQUFJLENBQUMsQ0FBQztJQUMxQixNQUFNSyxZQUFZLEdBQUdMLElBQUksQ0FBQ00sUUFBUSxJQUFJLEdBQUc7SUFDekMsTUFBTUMsY0FBYyxHQUFHUCxJQUFJLENBQUNRLFVBQVUsSUFBSSxHQUFHO0lBQzdDLE1BQU1DLFdBQVcsR0FBR1QsSUFBSSxDQUFDVSxRQUFRLElBQUksR0FBRztJQUN4QyxNQUFNQyxhQUFhLEdBQUdYLElBQUksQ0FBQ1ksVUFBVSxJQUFJLEdBQUc7SUFDNUMsTUFBTUMsVUFBVSxHQUFHVCxLQUFLLENBQUNVLE9BQU8sQ0FBQyxDQUFDLENBQUM7SUFFbkMsSUFBSTtRQUNGLDJEQUEyRDtRQUMzRCxNQUFNQyxJQUFJLEdBQUczQixzREFBZSxDQUFDLHlCQUF5QixFQUFFLE1BQU0sQ0FBQztRQUUvRCx3RUFBd0U7UUFDeEUsTUFBTTZCLFFBQVEsR0FBRzNCLHlEQUFnQixDQUFDLENBQUMsRUFBRXlCLElBQUksQ0FBQyxDQUFDLENBQUM7UUFDNUMsTUFBTUksSUFBSSxHQUFHRixRQUFRLENBQUM7WUFDcEJaLFlBQVk7WUFDWkUsY0FBYztZQUNkRSxXQUFXO1lBQ1hFLGFBQWE7WUFDYlosUUFBUTtZQUNSRSxPQUFPO1lBQ1BDLFVBQVU7WUFDVkMsU0FBUztZQUNUVSxVQUFVO1NBQ1gsQ0FBQztRQUVGcEIsT0FBTyxDQUFDQyxHQUFHLENBQUMsVUFBVSxFQUFFSyxRQUFRLENBQUMsQ0FBQztRQUVsQyxzRUFBc0U7UUFDdEUsTUFBTXFCLE9BQU8sR0FBRyxNQUFNL0Isd0RBQWdCLENBQUM7WUFDckNpQyxRQUFRLEVBQUUsSUFBSTtZQUNkQyxJQUFJLEVBQUU7Z0JBQUMsY0FBYzthQUFDO1NBQ3ZCLENBQUM7UUFDRixNQUFNQyxJQUFJLEdBQUcsTUFBTUosT0FBTyxDQUFDSyxPQUFPLEVBQUU7UUFFcEMsc0RBQXNEO1FBQ3RELDhFQUE4RTtRQUM5RSxNQUFNRCxJQUFJLENBQUNFLFVBQVUsQ0FBQ1AsSUFBSSxFQUFFO1lBQUVRLFNBQVMsRUFBRSxjQUFjO1NBQUUsQ0FBQyxDQUFDO1FBRTNELGlEQUFpRDtRQUNqRCxNQUFNQyxHQUFHLEdBQUcsTUFBTUosSUFBSSxDQUFDSSxHQUFHLENBQUM7WUFDekJDLE1BQU0sRUFBRSxJQUFJO1lBQ1pDLGVBQWUsRUFBRSxJQUFJO1lBQ3JCQyxtQkFBbUIsRUFBRSxJQUFJO1lBQ3pCQyxjQUFjLEVBQUUsQ0FBQzs7OztFQUlyQixDQUFDO1lBQ0dDLGNBQWMsRUFBRSxDQUFDLFdBQVcsQ0FBQztZQUM3QkMsTUFBTSxFQUFFO2dCQUNOQyxNQUFNLEVBQUUsRUFBRTtnQkFDVkMsSUFBSSxFQUFFLEVBQUU7Z0JBQ1JDLEtBQUssRUFBRSxFQUFFO2dCQUNUQyxHQUFHLEVBQUUsRUFBRTthQUNSO1NBQ0YsQ0FBQztRQUNGLE1BQU1sQixPQUFPLENBQUNtQixLQUFLLEVBQUUsQ0FBQztRQUV0QixnQ0FBZ0M7UUFDaEMvQyxHQUFHLENBQUNnRCxVQUFVLEdBQUcsR0FBRyxDQUFDO1FBQ3JCaEQsR0FBRyxDQUFDaUQsSUFBSSxDQUFDYixHQUFHLENBQUMsQ0FBQztJQUNoQixFQUFFLE9BQU9jLEdBQUcsRUFBRTtRQUNaakQsT0FBTyxDQUFDQyxHQUFHLENBQUNnRCxHQUFHLENBQUMsQ0FBQztRQUNqQmxELEdBQUcsQ0FBQ21ELE1BQU0sQ0FBQyxHQUFHLENBQUMsQ0FBQ0MsSUFBSSxDQUFDO1lBQUVDLE9BQU8sRUFBRUgsR0FBRyxDQUFDRyxPQUFPO1NBQUUsQ0FBQyxDQUFDO0lBQ2pELENBQUM7QUFDSCxDQUFDLEVBQUMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9wcm9mb3JtYS8uL3BhZ2VzL2FwaS9nZW5lcmF0ZS1pbnZvaWNlLmpzPzYxM2EiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IGZzIGZyb20gXCJmc1wiO1xuaW1wb3J0IHB1cHBldGVlciBmcm9tIFwicHVwcGV0ZWVyXCI7XG5pbXBvcnQgaGFuZGxlcnMgZnJvbSBcImhhbmRsZWJhcnNcIjtcblxuZXhwb3J0IGRlZmF1bHQgYXN5bmMgKHJlcSwgcmVzKSA9PiB7XG4gIC8vIGV4dHJhY3QgdGhlIGN1c3RvbWVyIG5hbWUgZnJvbSB0aGUgcmVxLmJvZHkgb2JqZWN0XG4gIC8vIGFuZCBhbHNvIHNldCBhIGRlZmF1bHQgbmFtZSB3aXRoIHRoZSBsb2dpY2FsIG9wZXJhdG9yXG4gIGNvbnNvbGUubG9nKHJlcS5ib2R5KTtcbiAgY29uc3QgeyBpbnZvaWNlRGF0YSB9ID0gSlNPTi5wYXJzZShyZXEuYm9keSk7XG5cbiAgY29uc3QgeyBwcm9kdWN0cywgZmlybSwgY3JlYXRlZCwgdGVzbGltRGF0ZSwgaW52b2ljZU5vLCB0b3RhbCB9ID0gaW52b2ljZURhdGE7XG5cbiAgY29uc29sZS5sb2coXCJmaXJtXCIsIGZpcm0pO1xuICBjb25zdCBjdXN0b21lck5hbWUgPSBmaXJtLmFsaWNpQWRpIHx8IFwiIFwiO1xuICBjb25zdCBjdXN0b21lckFkcmVzcyA9IGZpcm0uYWxpY2lBZHJlcyB8fCBcIiBcIjtcbiAgY29uc3QgY3VzdG9tZXJCaW4gPSBmaXJtLmFsaWNpQmluIHx8IFwiIFwiO1xuICBjb25zdCBjdXN0b21lclBob25lID0gZmlybS5hbGljaVBob25lIHx8IFwiIFwiO1xuICBjb25zdCB0b3RhbFByaWNlID0gdG90YWwudG9GaXhlZCgyKVxuXG4gIHRyeSB7XG4gICAgLy8gcmVhZCBvdXIgaW52b2ljZS10ZW1wbGF0ZS5odG1sIGZpbGUgdXNpbmcgbm9kZSBmcyBtb2R1bGVcbiAgICBjb25zdCBmaWxlID0gZnMucmVhZEZpbGVTeW5jKFwiLi9pbnZvaWNlLXRlbXBsYXRlLmh0bWxcIiwgXCJ1dGY4XCIpO1xuXG4gICAgLy8gY29tcGlsZSB0aGUgZmlsZSB3aXRoIGhhbmRsZWJhcnMgYW5kIGluamVjdCB0aGUgY3VzdG9tZXJOYW1lIHZhcmlhYmxlXG4gICAgY29uc3QgdGVtcGxhdGUgPSBoYW5kbGVycy5jb21waWxlKGAke2ZpbGV9YCk7XG4gICAgY29uc3QgaHRtbCA9IHRlbXBsYXRlKHtcbiAgICAgIGN1c3RvbWVyTmFtZSxcbiAgICAgIGN1c3RvbWVyQWRyZXNzLFxuICAgICAgY3VzdG9tZXJCaW4sXG4gICAgICBjdXN0b21lclBob25lLFxuICAgICAgcHJvZHVjdHMsXG4gICAgICBjcmVhdGVkLFxuICAgICAgdGVzbGltRGF0ZSxcbiAgICAgIGludm9pY2VObyxcbiAgICAgIHRvdGFsUHJpY2VcbiAgICB9KTtcblxuICAgIGNvbnNvbGUubG9nKFwicHJvZHVjdHNcIiwgcHJvZHVjdHMpO1xuXG4gICAgLy8gc2ltdWxhdGUgYSBjaHJvbWUgYnJvd3NlciB3aXRoIHB1cHBldGVlciBhbmQgbmF2aWdhdGUgdG8gYSBuZXcgcGFnZVxuICAgIGNvbnN0IGJyb3dzZXIgPSBhd2FpdCBwdXBwZXRlZXIubGF1bmNoKHtcbiAgICAgIGhlYWRsZXNzOiB0cnVlLFxuICAgICAgYXJnczogW1wiLS1uby1zYW5kYm94XCJdLFxuICAgIH0pO1xuICAgIGNvbnN0IHBhZ2UgPSBhd2FpdCBicm93c2VyLm5ld1BhZ2UoKTtcblxuICAgIC8vIHNldCBvdXIgY29tcGlsZWQgaHRtbCB0ZW1wbGF0ZSBhcyB0aGUgcGFnZXMgY29udGVudFxuICAgIC8vIHRoZW4gd2FpdFVudGlsIHRoZSBuZXR3b3JrIGlzIGlkbGUgdG8gbWFrZSBzdXJlIHRoZSBjb250ZW50IGhhcyBiZWVuIGxvYWRlZFxuICAgIGF3YWl0IHBhZ2Uuc2V0Q29udGVudChodG1sLCB7IHdhaXRVbnRpbDogXCJuZXR3b3JraWRsZTBcIiB9KTtcblxuICAgIC8vIGNvbnZlcnQgdGhlIHBhZ2UgdG8gcGRmIHdpdGggdGhlIC5wZGYoKSBtZXRob2RcbiAgICBjb25zdCBwZGYgPSBhd2FpdCBwYWdlLnBkZih7XG4gICAgICBmb3JtYXQ6IFwiQTRcIixcbiAgICAgIHByaW50QmFja2dyb3VuZDogdHJ1ZSxcbiAgICAgIGRpc3BsYXlIZWFkZXJGb290ZXI6IHRydWUsXG4gICAgICBmb290ZXJUZW1wbGF0ZTogYFxuICAgIDxkaXYgc3R5bGU9XCJjb2xvcjogZGFya3NsYXRlZ3JleTsgYm9yZGVyLXRvcDogc29saWQgbGlnaHRncmF5IDFweDsgZm9udC1zaXplOiAxMHB4OyBwYWRkaW5nLXRvcDogNXB4OyB0ZXh0LWFsaWduOiBjZW50ZXI7IHdpZHRoOiAxMDAlO1wiPlxuICAgIDxzcGFuIGNsYXNzPVwicGFnZU51bWJlclwiPjwvc3Bhbj5cbiAgICA8L2Rpdj5cbiAgYCxcbiAgICAgIGhlYWRlclRlbXBsYXRlOiBgPGRpdj48L2Rpdj5gLFxuICAgICAgbWFyZ2luOiB7XG4gICAgICAgIGJvdHRvbTogNzAsIC8vIG1pbmltdW0gcmVxdWlyZWQgZm9yIGZvb3RlciBtc2cgdG8gZGlzcGxheVxuICAgICAgICBsZWZ0OiAyNSxcbiAgICAgICAgcmlnaHQ6IDM1LFxuICAgICAgICB0b3A6IDMxLFxuICAgICAgfSxcbiAgICB9KTtcbiAgICBhd2FpdCBicm93c2VyLmNsb3NlKCk7XG5cbiAgICAvLyBzZW5kIHRoZSByZXN1bHQgdG8gdGhlIGNsaWVudFxuICAgIHJlcy5zdGF0dXNDb2RlID0gMjAwO1xuICAgIHJlcy5zZW5kKHBkZik7XG4gIH0gY2F0Y2ggKGVycikge1xuICAgIGNvbnNvbGUubG9nKGVycik7XG4gICAgcmVzLnN0YXR1cyg1MDApLmpzb24oeyBtZXNzYWdlOiBlcnIubWVzc2FnZSB9KTtcbiAgfVxufTtcbiJdLCJuYW1lcyI6WyJmcyIsInB1cHBldGVlciIsImhhbmRsZXJzIiwicmVxIiwicmVzIiwiY29uc29sZSIsImxvZyIsImJvZHkiLCJpbnZvaWNlRGF0YSIsIkpTT04iLCJwYXJzZSIsInByb2R1Y3RzIiwiZmlybSIsImNyZWF0ZWQiLCJ0ZXNsaW1EYXRlIiwiaW52b2ljZU5vIiwidG90YWwiLCJjdXN0b21lck5hbWUiLCJhbGljaUFkaSIsImN1c3RvbWVyQWRyZXNzIiwiYWxpY2lBZHJlcyIsImN1c3RvbWVyQmluIiwiYWxpY2lCaW4iLCJjdXN0b21lclBob25lIiwiYWxpY2lQaG9uZSIsInRvdGFsUHJpY2UiLCJ0b0ZpeGVkIiwiZmlsZSIsInJlYWRGaWxlU3luYyIsInRlbXBsYXRlIiwiY29tcGlsZSIsImh0bWwiLCJicm93c2VyIiwibGF1bmNoIiwiaGVhZGxlc3MiLCJhcmdzIiwicGFnZSIsIm5ld1BhZ2UiLCJzZXRDb250ZW50Iiwid2FpdFVudGlsIiwicGRmIiwiZm9ybWF0IiwicHJpbnRCYWNrZ3JvdW5kIiwiZGlzcGxheUhlYWRlckZvb3RlciIsImZvb3RlclRlbXBsYXRlIiwiaGVhZGVyVGVtcGxhdGUiLCJtYXJnaW4iLCJib3R0b20iLCJsZWZ0IiwicmlnaHQiLCJ0b3AiLCJjbG9zZSIsInN0YXR1c0NvZGUiLCJzZW5kIiwiZXJyIiwic3RhdHVzIiwianNvbiIsIm1lc3NhZ2UiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(api)/./pages/api/generate-invoice.js\n");
+
+/***/ })
+
+};
+;
+
+// load runtime
+var __webpack_require__ = require("../../webpack-api-runtime.js");
+__webpack_require__.C(exports);
+var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
+var __webpack_exports__ = (__webpack_exec__("(api)/./pages/api/generate-invoice.js"));
+module.exports = __webpack_exports__;
+
+})();

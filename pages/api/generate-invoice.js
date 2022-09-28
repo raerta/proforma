@@ -8,13 +8,14 @@ export default async (req, res) => {
   console.log(req.body);
   const { invoiceData } = JSON.parse(req.body);
 
-  const { products, firm, created, teslimDate, invoiceNo } = invoiceData;
+  const { products, firm, created, teslimDate, invoiceNo, total } = invoiceData;
 
   console.log("firm", firm);
   const customerName = firm.aliciAdi || " ";
   const customerAdress = firm.aliciAdres || " ";
   const customerBin = firm.aliciBin || " ";
   const customerPhone = firm.aliciPhone || " ";
+  const totalPrice = total.toFixed(2)
 
   try {
     // read our invoice-template.html file using node fs module
@@ -31,9 +32,9 @@ export default async (req, res) => {
       created,
       teslimDate,
       invoiceNo,
+      totalPrice
     });
 
-    console.log("products", products);
 
     // simulate a chrome browser with puppeteer and navigate to a new page
     const browser = await puppeteer.launch({

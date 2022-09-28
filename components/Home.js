@@ -20,6 +20,8 @@ const Home = () => {
   const [inputText, setInputText] = useState("");
   const [teslimDate, setTeslimDate] = useState("20-25 Gün");
   const [invoice, setInvoice] = useState("");
+  const [kdv, setKdv] = useState("");
+  const [iskonto, setIskonto] = useState("");
   const [alici, setAlici] = useState({
     aliciAdi: "",
     aliciAdres: "",
@@ -45,9 +47,9 @@ const Home = () => {
     const newUrun = {
       urunAdi: urun.urunAdi,
       urunKodu: urun.urunKodu,
-      urunFiyat: urun.urunFiyat,
+      urunFiyat: urun.urunFiyat.toFixed(2),
       qty: qty,
-      urunTotal: urun.urunFiyat * qty,
+      urunTotal: (urun.urunFiyat * qty).toFixed(2),
     };
     const ifExist = selectedProducts.filter(
       (prod) => prod.urunAdi === newUrun.urunAdi
@@ -77,12 +79,29 @@ const Home = () => {
     setAlici((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  function percentage(partialValue, totalValue) {
+    return (totalValue * partialValue) / 100;
+  }
+  function discount(partialValue, totalValue) {
+    return (totalValue * partialValue) / 100;
+  }
+
   const data = {
     products: selectedProducts,
     firm: alici,
     created: date,
     teslimDate: teslimDate,
     invoiceNo: invoice,
+    total:
+      selectedProducts.reduce((a, c) => a + c.urunFiyat * c.qty, 0) +
+      percentage(
+        kdv,
+        selectedProducts.reduce((a, c) => a + c.urunFiyat * c.qty, 0)
+      ) -
+      discount(
+        iskonto,
+        selectedProducts.reduce((a, c) => a + c.urunFiyat * c.qty, 0)
+      ).toFixed(2),
   };
 
   return (
@@ -174,10 +193,10 @@ const Home = () => {
                     />
                   </div>
                   <div className="w-[18%] bg-white border border-black p-2 text-center flex justify-center items-center">
-                    <p className="mr-2">{urun.urunFiyat}</p> USD
+                    <p className="mr-2">{urun.urunFiyat.toFixed(2)}</p> USD
                   </div>
                   <div className="border border-black w-[22%] bg-[#d9d9d9] p-2 text-center flex justify-center items-center">
-                    <p className="mr-2">{urun.urunFiyat * qty}</p>USD
+                    <p className="mr-2">{(urun.urunFiyat * qty).toFixed(2)}</p>USD
                   </div>
                   <div className="border border-black w-[5%] bg-[#d9d9d9] p-2 text-center flex justify-center items-center">
                     <button
@@ -244,7 +263,7 @@ const Home = () => {
                 <p className="mr-2">{urun.urunFiyat}</p> USD
               </div>
               <div className="border border-black w-[22%] bg-[#d9d9d9] p-2 text-center flex justify-center items-center">
-                <p className="mr-2">{urun.urunFiyat * urun.qty}</p>USD
+                <p className="mr-2">{(urun.urunFiyat * urun.qty).toFixed(2)}</p>USD
               </div>
               <div className="border border-black w-[5%] bg-[#d9d9d9] p-2 text-center flex justify-center items-center">
                 <button
@@ -257,15 +276,49 @@ const Home = () => {
             </div>
           ))}
       </div>
-      <div className="mt-20 flex justify-end">
-        <div className="flex text-3xl font-bold">
-          <p className="mr-1">Toplam:</p>
-
-          {selectedProducts
-            .reduce((a, c) => a + c.urunFiyat * c.qty, 0)
-            .toFixed(2)}
-
-          <p className="ml-1">USD</p>
+      <div className="mt-20 flex flex-col items-end">
+        <div className="mt-2 flex text-3xl font-bold justify-end">
+          <p className="mr-1">KDV:</p>
+          <input
+            className="ring-indigo-600 ring outline-none w-48 h-8 placeholder:text-lg placeholder:font-medium font-medium p-2"
+            type="number"
+            placeholder="KDV Oranı %"
+            value={kdv}
+            onChange={(e) => setKdv(Number(e.target.value))}
+          />
+        </div>
+        <div className="mt-4 flex text-3xl font-bold justify-end">
+          <p className="mr-1">İskonto:</p>
+          <input
+            className="ring-indigo-600 ring outline-none w-48 h-8 placeholder:text-lg placeholder:font-medium font-medium p-2"
+            type="number"
+            placeholder="İskonto Oranı %"
+            value={iskonto}
+            onChange={(e) => setIskonto(Number(e.target.value))}
+          />
+        </div>
+        <div className="border p-4 mt-8">
+          <div className="flex text-3xl font-medium ">
+            <p className="mr-1">KDV:</p>
+            {percentage(
+              kdv,
+              selectedProducts.reduce((a, c) => a + c.urunFiyat * c.qty, 0)
+            ).toFixed(2)}
+            <p className="ml-1 w-28">USD</p>
+          </div>
+          <div className="flex text-3xl font-medium mt-8">
+            <p className="mr-1">İskonto:</p>
+            {discount(
+              iskonto,
+              selectedProducts.reduce((a, c) => a + c.urunFiyat * c.qty, 0)
+            ).toFixed(2)}
+            <p className="ml-1 w-28">USD</p>
+          </div>
+          <div className="flex text-3xl font-medium mt-8">
+            <p className="mr-1">Toplam:</p>
+            {data.total.toFixed(2)}
+            <p className="ml-1 w-28">USD</p>
+          </div>
         </div>
       </div>
       <div className="mt-10 flex justify-end items-center text-2xl ">

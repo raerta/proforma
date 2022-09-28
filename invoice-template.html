@@ -5,7 +5,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Invoice</title>
-  <link rel="stylesheet" href="/styles/proforma.css" />
   <style>
     .flex {
       display: flex;
@@ -41,6 +40,10 @@
       border-top: 0 !important;
       border-left: 0 !important;
       border-right: 0 !important;
+    }
+
+    .uppercase {
+      text-transform: uppercase;
     }
 
 
@@ -120,6 +123,10 @@
       justify-content: center;
     }
 
+    .justify-around {
+      justify-content: space-around;
+    }
+
     .justify-end {
       justify-content: end;
     }
@@ -195,7 +202,7 @@
   </style>
 </head>
 
-<body class="pt-1 pb-2 px-4">
+<body class="pt-1 pb-2 px-4" lang="tr">
   <div class="flex justify-end">
     <img width="150px" height="150px" src="https://samergrouptr.com/static/media/sglogo.0e989259.png"
       alt="SamerGlobal" />
@@ -260,7 +267,7 @@
   <div class="flex w-full flex-col">
     {{#each products}}
     <div class="flex w-full">
-      <div class="w-48 bg-white border border-black p-1 flex items-center">
+      <div style="padding-left: 8px;" class="w-48 bg-white border border-black p-1 flex items-center">
         {{urunAdi}}
       </div>
       <div class="border border-black w-10 bg-primary p-1 text-center">
@@ -274,11 +281,54 @@
         <p class="mr-2">{{urunTotal}}</p>
         USD
       </div>
-
     </div>
     {{/each}}
   </div>
 
+  <div class="mt-10">
+    <div style="margin-right: 4rem; font-size:1.5rem;" class="p-2 flex items-center justify-end gap-3">
+      TOPLAM: {{totalPrice}} USD
+    </div>
+  </div>
+  <div class="mt-10">
+    <div class="p-2 flex items-center uppercase">
+      <p style="font-size: 1.5rem;" class="border-b border border-black">ÖZEL ŞARTLAR</p>
+    </div>
+    <ul style="list-style: none; padding-right: 2rem;" class="flex flex-col gap-3">
+      <li>
+        1-Alıcı ve satıcı arasında yapılan iş bu belge aynı zamanda bir cari hesap sözleşmesi niteliğinde olup,
+        karşılıklı alaşmazlık vukuunda TTK 87 vd. hükümleri uygulanır.
+      </li>
+      <li>2- Vadesinde ödenmeyen faturalar için her ay fatura bedelinin % 3 oranında vade farkı hesabı yapılır, ayrı bir
+        fatura olarak alıcıya sunulur. </li>
+      <li>3- Alıcı tarafından 1 (Bir) gün içinde yazılı olarak değişklik talebinde bulunulmadığı taktirde, iş bu sipariş
+        formunda yazılı şartlar taraflar arasında satış sözleşmesinde
+        aynen geçerli sayılır.</li>
+      <li>4- Taraflar arasında çıkabilecek her türlü itilaf halinde ANTALYA Mahkemeleri ve İcra Daireleri yetkili
+        kılınmıştır. </li>
+      <li>5- Fatura tarihindeki kur esas alınacaktır.</li>
+    </ul>
+
+    <div class="flex w-full mt-10">
+      <div class="w-50 p-8 border border-black">ÖDEME ŞEKLİ: Sözleşmeye göre </div>
+      <div class="w-50 p-8 border border-black">TESLİM DETAY: {{teslimDate}} </div>
+    </div>
+  </div>
+  <div class="mt-10">
+    <div class="mt-10">
+      <div class="w-full flex flex-col justify-center text-center p-8 bg-secondary border border-black">
+        <p>Samer Group Su Arıtma Sistemleri İnş. Ltd. Şti </p>
+        <p>Altinkale man. Palmiye cad No 7/1 Dosemealti Antalya Turkey</p>
+        <p>IBAN: TR140004601401001000026344 AKBANK</p>
+        <p>SWIFT: AKBKTRIS</p>
+      </div>
+      <div class="w-full flex items-center justify-around p-8 bg-secondary border border-black">
+        <a href="tel:+902424432000">+90 242 443 20 00</a>
+        <a href="mailto:info@samergrouptr.com">info@samergrouptr.com</a>
+        <a href="https://samergrouptr.com">samergrouptr.com</a>
+      </div>
+    </div>
+  </div>
   </div>
 </body>
 

@@ -21,12 +21,12 @@
     },
     {
         "urunAdi": "5. Ürün",
-        "urunFiyat": 100,
+        "urunFiyat": 100.20,
         "urunKodu": "sgw-5"
     },
     {
         "urunAdi": "6. Ürün",
-        "urunFiyat": 100,
+        "urunFiyat": 100.10,
         "urunKodu": "sgw-6"
     },
     {
