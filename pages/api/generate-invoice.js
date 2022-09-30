@@ -5,12 +5,12 @@ import handlers from "handlebars";
 export default async (req, res) => {
   // extract the customer name from the req.body object
   // and also set a default name with the logical operator
-  console.log(req.body);
+
   const { invoiceData } = JSON.parse(req.body);
 
   const { products, firm, created, teslimDate, invoiceNo, total } = invoiceData;
 
-  console.log("firm", firm);
+
   const customerName = firm.aliciAdi || " ";
   const customerAdress = firm.aliciAdres || " ";
   const customerBin = firm.aliciBin || " ";
