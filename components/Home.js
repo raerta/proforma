@@ -6,9 +6,9 @@ import ProformaCreate from "./ProformaCreate";
 const Home = () => {
   const today = new Date();
   const day =
-    today.getUTCDate() < 10 ? `0${today.getUTCDate()}` : today.getUTCDate();
+    today.getUTCDate() <= 9 ? `0${today.getUTCDate()}` : today.getUTCDate();
   const month =
-    today.getUTCMonth() < 10
+    today.getUTCMonth() <= 8
       ? `0${today.getUTCMonth() + 1}`
       : today.getUTCMonth() + 1;
   const year = today.getUTCFullYear();
@@ -107,7 +107,12 @@ const Home = () => {
   return (
     <div className="container m-auto pb-96">
       <div className="Header flex justify-end">
-        <Image width={200} height={200} src={"/logo.png"} alt="SamerGlobal" />
+        <Image
+          width={200}
+          height={200}
+          src={"/proforma/logo.png"}
+          alt="SamerGlobal"
+        />
       </div>
       <h1 className="border-b border-black mx-auto w-max text-4xl">
         PROFORMA - INVOICE
@@ -196,7 +201,8 @@ const Home = () => {
                     <p className="mr-2">{urun.urunFiyat.toFixed(2)}</p> USD
                   </div>
                   <div className="border border-black w-[22%] bg-[#d9d9d9] p-2 text-center flex justify-center items-center">
-                    <p className="mr-2">{(urun.urunFiyat * qty).toFixed(2)}</p>USD
+                    <p className="mr-2">{(urun.urunFiyat * qty).toFixed(2)}</p>
+                    USD
                   </div>
                   <div className="border border-black w-[5%] bg-[#d9d9d9] p-2 text-center flex justify-center items-center">
                     <button
@@ -263,7 +269,8 @@ const Home = () => {
                 <p className="mr-2">{urun.urunFiyat}</p> USD
               </div>
               <div className="border border-black w-[22%] bg-[#d9d9d9] p-2 text-center flex justify-center items-center">
-                <p className="mr-2">{(urun.urunFiyat * urun.qty).toFixed(2)}</p>USD
+                <p className="mr-2">{(urun.urunFiyat * urun.qty).toFixed(2)}</p>
+                USD
               </div>
               <div className="border border-black w-[5%] bg-[#d9d9d9] p-2 text-center flex justify-center items-center">
                 <button

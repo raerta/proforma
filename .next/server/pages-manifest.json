@@ -1,6 +1,9 @@
 {
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
+  "/api/generate-invoice": "pages/api/generate-invoice.js",
+  "/api/hello": "pages/api/hello.js",
+  "/": "pages/index.html",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js"
+  "/404": "pages/404.html"
 }

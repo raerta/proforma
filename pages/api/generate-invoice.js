@@ -5,17 +5,18 @@ import handlers from "handlebars";
 export default async (req, res) => {
   // extract the customer name from the req.body object
   // and also set a default name with the logical operator
-
+  if (!req.body) {
+    return res.status(500).json({ hata: "eksik ya da yanlış bilgi" });
+  }
   const { invoiceData } = JSON.parse(req.body);
 
   const { products, firm, created, teslimDate, invoiceNo, total } = invoiceData;
-
 
   const customerName = firm.aliciAdi || " ";
   const customerAdress = firm.aliciAdres || " ";
   const customerBin = firm.aliciBin || " ";
   const customerPhone = firm.aliciPhone || " ";
-  const totalPrice = total.toFixed(2)
+  const totalPrice = total.toFixed(2);
 
   try {
     // read our invoice-template.html file using node fs module
@@ -32,9 +33,8 @@ export default async (req, res) => {
       created,
       teslimDate,
       invoiceNo,
-      totalPrice
+      totalPrice,
     });
-
 
     // simulate a chrome browser with puppeteer and navigate to a new page
     const browser = await puppeteer.launch({
