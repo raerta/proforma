@@ -28,6 +28,21 @@ const Home = () => {
     aliciBin: "",
     aliciPhone: "",
   });
+  const [conditions, setConditions] = useState([
+    "1- Alıcı ve satıcı arasında yapılan iş bu belge aynı zamanda bir cari hesap sözleşmesi niteliğinde olup, karşılıklı alaşmazlık vukuunda TTK 87 vd. hükümleri uygulanır.",
+    "2- Vadesinde ödenmeyen faturalar için her ay fatura bedelinin % 3 oranında vade farkı hesabı yapılır, ayrı bir fatura olarak alıcıya sunulur.",
+    "3- Alıcı tarafından 1 (Bir) gün içinde yazılı olarak değişklik talebinde bulunulmadığı taktirde, iş bu sipariş formunda yazılı şartlar taraflar arasında satış sözleşmesinde aynen geçerli sayılır.",
+    "4- Taraflar arasında çıkabilecek her türlü itilaf halinde ANTALYA Mahkemeleri ve İcra Daireleri yetkili kılınmıştır.",
+    "5- Fatura tarihindeki kur esas alınacaktır.",
+  ]);
+
+  const [payment, setPayment] = useState("Sözleşmeye göre");
+  const [iban, setIban] = useState("TR140004601401001000026344 AKBANK");
+  const [swift, setSwift] = useState("AKBKTRIS");
+
+  const [condIsEdit, setCondIsEdit] = useState("");
+  const [inputCond, setInputCond] = useState("");
+  const [height, setHeight] = useState(10000);
 
   useEffect(() => {
     const filteredProductWithName = UrunData.filter((prod) =>
@@ -86,12 +101,54 @@ const Home = () => {
     return (totalValue * partialValue) / 100;
   }
 
+  const editCond = (cnd) => {
+    setCondIsEdit(cnd);
+  };
+
+  const changeCond = (e, cnd) => {
+    console.log("onchange");
+    setInputCond(e.target.value);
+  };
+
+  function handleChangeCondition(index) {
+    const conditionsdd = conditions.map((c, i) => {
+      if (i === index) {
+        // Increment the clicked counter
+        return inputCond;
+      } else {
+        // The rest haven't changed
+        return c;
+      }
+    });
+    setConditions(conditionsdd);
+  }
+
+  useEffect(() => {
+    var html = window.document.documentElement;
+    var body = window.document.body;
+    var height = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+    setHeight(height);
+  }, [selectedProducts, conditions]);
+
   const data = {
     products: selectedProducts,
     firm: alici,
     created: date,
     teslimDate: teslimDate,
     invoiceNo: invoice,
+    conditions: conditions,
+    swift: swift,
+    iban: iban,
+    payment: payment,
+    height: height,
+    swift: swift,
+    iban: iban,
     total:
       selectedProducts.reduce((a, c) => a + c.urunFiyat * c.qty, 0) +
       percentage(
@@ -103,7 +160,6 @@ const Home = () => {
         selectedProducts.reduce((a, c) => a + c.urunFiyat * c.qty, 0)
       ).toFixed(2),
   };
-
   return (
     <div className="container m-auto pb-96">
       <div className="Header flex justify-end">
@@ -337,6 +393,89 @@ const Home = () => {
           onChange={(e) => setTeslimDate(e.target.value)}
           value={teslimDate}
         />
+      </div>
+
+      <div className="mt-10"></div>
+      <div className="mt-10">
+        <div className="p-2 flex items-center uppercase">
+          <p className="border-b border border-black p-2">ÖZEL ŞARTLAR</p>
+        </div>
+        <ol className="flex flex-col gap-3">
+          {conditions.map((cnd, index) => (
+            <li key={cnd}>
+              <div className="flex gap-4 w-full">
+                <button
+                  type="button"
+                  className={`text-white p-2 rounded-md bg-yellow-600`}
+                  onClick={() => editCond(cnd, index)}
+                >
+                  Düzenle
+                </button>
+
+                <button
+                  type="button"
+                  className={` text-white p-2 rounded-md ${
+                    cnd === condIsEdit ? "bg-blue-600" : "hidden"
+                  }`}
+                  onClick={(e) => handleChangeCondition(index)}
+                >
+                  Kaydet
+                </button>
+
+                <textarea
+                  className={`p-2 w-full border-2 placeholder-teal-800 ${
+                    cnd === condIsEdit ? "border-blue-600" : "border-yellow-600"
+                  }`}
+                  placeholder={cnd}
+                  onChange={(e) => changeCond(e, cnd)}
+                  disabled={cnd !== condIsEdit}
+                />
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <div className="flex w-full items-center mt-10">
+          <label>ÖDEME ŞEKLİ: </label>
+          <input
+            type={"text"}
+            className="w-full p-4 border border-black"
+            placeholder={"Sözleşmeye göre"}
+            value={payment}
+            onChange={(e) => setPayment(e.target.value)}
+          />
+        </div>
+      </div>
+      <div className="mt-10">
+        <div className="mt-10">
+          <div className="w-full flex flex-col justify-center text-center p-8 bg-secondary border border-black">
+            <p>Samer Group Su Arıtma Sistemleri İnş. Ltd. Şti </p>
+            <p>Altinkale man. Palmiye cad No 7/1 Dosemealti Antalya Turkey</p>
+            <div className="flex gap-3">
+              IBAN:
+              <input
+                type={"text"}
+                value={iban}
+                className="w-full"
+                onChange={(e) => setIban(e.target.value)}
+              ></input>
+            </div>
+            <div className="flex gap-3">
+              SWIFT:
+              <input
+                type={"text"}
+                value={swift}
+                className="w-full"
+                onChange={(e) => setSwift(e.target.value)}
+              ></input>
+            </div>
+          </div>
+          <div className="w-full flex items-center justify-around p-8 bg-secondary border border-black">
+            <a href="tel:+902424432000">+90 242 443 20 00</a>
+            <a href="mailto:info@samergrouptr.com">info@samergrouptr.com</a>
+            <a href="https://samergrouptr.com">samergrouptr.com</a>
+          </div>
+        </div>
       </div>
 
       <ProformaCreate invoiceData={data} />

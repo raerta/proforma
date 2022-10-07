@@ -10,7 +10,19 @@ export default async (req, res) => {
   }
   const { invoiceData } = JSON.parse(req.body);
 
-  const { products, firm, created, teslimDate, invoiceNo, total } = invoiceData;
+  const {
+    products,
+    firm,
+    created,
+    teslimDate,
+    invoiceNo,
+    total,
+    conditions,
+    height,
+    payment,
+    swift,
+    iban
+  } = invoiceData;
 
   const customerName = firm.aliciAdi || " ";
   const customerAdress = firm.aliciAdres || " ";
@@ -34,6 +46,10 @@ export default async (req, res) => {
       teslimDate,
       invoiceNo,
       totalPrice,
+      conditions,
+      payment,
+      swift,
+      iban
     });
 
     // simulate a chrome browser with puppeteer and navigate to a new page
@@ -49,9 +65,10 @@ export default async (req, res) => {
 
     // convert the page to pdf with the .pdf() method
     const pdf = await page.pdf({
-      format: "A4",
       printBackground: true,
       displayHeaderFooter: true,
+
+      height: height - 900 + "px",
       footerTemplate: `
     <div style="color: darkslategrey; border-top: solid lightgray 1px; font-size: 10px; padding-top: 5px; text-align: center; width: 100%;">
     <span class="pageNumber"></span>
@@ -62,7 +79,7 @@ export default async (req, res) => {
         bottom: 70, // minimum required for footer msg to display
         left: 25,
         right: 35,
-        top: 31,
+        top: 0,
       },
     });
     await browser.close();

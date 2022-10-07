@@ -204,8 +204,7 @@
 
 <body class="pt-1 pb-2 px-4" lang="tr">
   <div class="flex justify-end">
-    <img width="150px" height="150px" src="https://samergrouptr.com/proforma/logo.png"
-      alt="SamerGlobal" />
+    <img width="150px" height="150px" src="https://samergrouptr.com/proforma/logo.png" alt="SamerGlobal" />
   </div>
   <h1 class="border-b border-black mx-auto w-max text-4xl">
     PROFORMA - INVOICE
@@ -220,7 +219,7 @@
       <p class="mt-4">
         ALTINKALE MAH. PALMIYE CAD. NO: 7 J/1 - DÖŞEMEALTI/ ANTALYA
       </p>
-      <p class="mt-4">Phone: +90 532 285 63 00</p>
+      <p class="mt-4">Phone: +90 242 443 20 00</p>
       <p class="mt-4">E-mail: info@samergrouptr.com</p>
     </div>
     <div class="w-50 bg-primary border border-black p-8">
@@ -295,22 +294,15 @@
       <p style="font-size: 1.5rem;" class="border-b border border-black">ÖZEL ŞARTLAR</p>
     </div>
     <ul style="list-style: none; padding-right: 2rem;" class="flex flex-col gap-3">
+      {{#each conditions}}
       <li>
-        1-Alıcı ve satıcı arasında yapılan iş bu belge aynı zamanda bir cari hesap sözleşmesi niteliğinde olup,
-        karşılıklı alaşmazlık vukuunda TTK 87 vd. hükümleri uygulanır.
+        {{this}}
       </li>
-      <li>2- Vadesinde ödenmeyen faturalar için her ay fatura bedelinin % 3 oranında vade farkı hesabı yapılır, ayrı bir
-        fatura olarak alıcıya sunulur. </li>
-      <li>3- Alıcı tarafından 1 (Bir) gün içinde yazılı olarak değişklik talebinde bulunulmadığı taktirde, iş bu sipariş
-        formunda yazılı şartlar taraflar arasında satış sözleşmesinde
-        aynen geçerli sayılır.</li>
-      <li>4- Taraflar arasında çıkabilecek her türlü itilaf halinde ANTALYA Mahkemeleri ve İcra Daireleri yetkili
-        kılınmıştır. </li>
-      <li>5- Fatura tarihindeki kur esas alınacaktır.</li>
+      {{/each}}
     </ul>
 
     <div class="flex w-full mt-10">
-      <div class="w-50 p-8 border border-black">ÖDEME ŞEKLİ: Sözleşmeye göre </div>
+      <div class="w-50 p-8 border border-black">ÖDEME ŞEKLİ: {{payment}} </div>
       <div class="w-50 p-8 border border-black">TESLİM DETAY: {{teslimDate}} </div>
     </div>
   </div>
@@ -319,8 +311,8 @@
       <div class="w-full flex flex-col justify-center text-center p-8 bg-secondary border border-black">
         <p>Samer Group Su Arıtma Sistemleri İnş. Ltd. Şti </p>
         <p>Altinkale man. Palmiye cad No 7/1 Dosemealti Antalya Turkey</p>
-        <p>IBAN: TR140004601401001000026344 AKBANK</p>
-        <p>SWIFT: AKBKTRIS</p>
+        <p>IBAN: {{iban}}</p>
+        <p>SWIFT: {{swift}}</p>
       </div>
       <div class="w-full flex items-center justify-around p-8 bg-secondary border border-black">
         <a href="tel:+902424432000">+90 242 443 20 00</a>

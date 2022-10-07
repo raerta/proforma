@@ -53,7 +53,7 @@ puppeteer__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? 
         });
     }
     const { invoiceData  } = JSON.parse(req.body);
-    const { products , firm , created , teslimDate , invoiceNo , total  } = invoiceData;
+    const { products , firm , created , teslimDate , invoiceNo , total , conditions , height , payment , swift , iban  } = invoiceData;
     const customerName = firm.aliciAdi || " ";
     const customerAdress = firm.aliciAdres || " ";
     const customerBin = firm.aliciBin || " ";
@@ -73,7 +73,11 @@ puppeteer__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? 
             created,
             teslimDate,
             invoiceNo,
-            totalPrice
+            totalPrice,
+            conditions,
+            payment,
+            swift,
+            iban
         });
         // simulate a chrome browser with puppeteer and navigate to a new page
         const browser = await puppeteer__WEBPACK_IMPORTED_MODULE_1__["default"].launch({
@@ -90,9 +94,9 @@ puppeteer__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? 
         });
         // convert the page to pdf with the .pdf() method
         const pdf = await page.pdf({
-            format: "A4",
             printBackground: true,
             displayHeaderFooter: true,
+            height: height - 900 + "px",
             footerTemplate: `
     <div style="color: darkslategrey; border-top: solid lightgray 1px; font-size: 10px; padding-top: 5px; text-align: center; width: 100%;">
     <span class="pageNumber"></span>
@@ -103,7 +107,7 @@ puppeteer__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? 
                 bottom: 70,
                 left: 25,
                 right: 35,
-                top: 31
+                top: 0
             }
         });
         await browser.close();
